@@ -1,0 +1,44 @@
+package org.imt.tournamentmaster.service.reporting;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.imt.tournamentmaster.TestUtils;
+import org.imt.tournamentmaster.model.match.Match;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+
+import static org.junit.jupiter.api.Assertions.fail;
+
+public class JsonReportingServiceTest {
+
+    private final static String EXPECTED_REPORT = "{\"equipeA\":{\"nom\":\"Equipe 1\",\"joueurs\":[{\"nom\":\"Doe\",\"prenom\":\"John\",\"numero\":1},{\"nom\":\"Doe\",\"prenom\":\"Jane\",\"numero\":2},{\"nom\":\"Doe\",\"prenom\":\"Jack\",\"numero\":3}]},\"equipeB\":{\"nom\":\"Equipe 2\",\"joueurs\":[{\"nom\":\"Doe\",\"prenom\":\"Jill\",\"numero\":4},{\"nom\":\"Doe\",\"prenom\":\"Jim\",\"numero\":5},{\"nom\":\"Doe\",\"prenom\":\"Jenny\",\"numero\":6}]},\"rounds\":[{\"scoreA\":1,\"scoreB\":2,\"roundNumber\":1},{\"scoreA\":3,\"scoreB\":4,\"roundNumber\":2},{\"scoreA\":5,\"scoreB\":6,\"roundNumber\":3}],\"status\":\"TERMINE\"}\n";
+
+    private final static Logger logger = org.slf4j.LoggerFactory.getLogger(JsonReportingServiceTest.class);
+
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
+    // TODO-00 : Comprendre comment fonctionne le test, comment les données sont générées et comparées
+    @Test
+    public void testGenerateReport() {
+        // create a match
+        Match match = TestUtils.generateMatch();
+
+        ReportingService reportingService = new JsonReportingService();
+
+        // report
+        try {
+            String report = reportingService.report(match);
+            logger.info(report);
+
+            Match expected = objectMapper.readValue(EXPECTED_REPORT.getBytes(StandardCharsets.UTF_8), Match.class);
+            Match actual = objectMapper.readValue(report.getBytes(StandardCharsets.UTF_8), Match.class);
+
+            Assertions.assertEquals(expected, actual);
+        } catch (IOException e) {
+            fail("Error while reporting", e);
+        }
+    }
+}
