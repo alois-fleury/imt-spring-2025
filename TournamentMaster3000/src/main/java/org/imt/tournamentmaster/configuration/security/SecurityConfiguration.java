@@ -33,8 +33,10 @@ public class SecurityConfiguration {
                                 .requestMatchers("/actuator/**").hasRole("ADMIN")
                                 .anyRequest().permitAll())
                 .httpBasic(Customizer.withDefaults())
-                .formLogin(Customizer.withDefaults());
-
+                .formLogin(login -> login.loginPage("/login.html")
+                        .loginProcessingUrl("/login")
+                        .failureUrl("/login.html?error")
+                        .permitAll());
         return http.build();
     }
 
