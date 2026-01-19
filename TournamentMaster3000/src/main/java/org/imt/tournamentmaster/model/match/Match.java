@@ -1,5 +1,7 @@
 package org.imt.tournamentmaster.model.match;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.imt.tournamentmaster.model.equipe.Equipe;
 
@@ -12,9 +14,10 @@ import java.util.Objects;
 @Table(name = "`match`")
 public class Match {
 
+    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private long id;
+    private Long id;
 
     @ManyToOne
     private Equipe equipeA;
@@ -32,12 +35,13 @@ public class Match {
 
     private Status status;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private Date date;
 
     public Match() {
     }
 
-    public Match(long id, Equipe equipeA, Equipe equipeB, List<Round> rounds, Status status, Date date) {
+    public Match(Long id, Equipe equipeA, Equipe equipeB, List<Round> rounds, Status status, Date date) {
         this.id = id;
         this.equipeA = equipeA;
         this.equipeB = equipeB;
@@ -46,7 +50,7 @@ public class Match {
         this.date = date;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -66,7 +70,7 @@ public class Match {
         return status;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

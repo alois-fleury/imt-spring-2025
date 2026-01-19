@@ -17,7 +17,25 @@ import static org.junit.jupiter.api.Assertions.fail;
 @SpringBootTest
 public class JsonReportingServiceTest {
 
-    private final static String EXPECTED_REPORT = "{\"equipeA\":{\"nom\":\"Equipe 1\",\"joueurs\":[{\"nom\":\"Doe\",\"prenom\":\"John\",\"numero\":1},{\"nom\":\"Doe\",\"prenom\":\"Jane\",\"numero\":2},{\"nom\":\"Doe\",\"prenom\":\"Jack\",\"numero\":3}]},\"equipeB\":{\"nom\":\"Equipe 2\",\"joueurs\":[{\"nom\":\"Doe\",\"prenom\":\"Jill\",\"numero\":4},{\"nom\":\"Doe\",\"prenom\":\"Jim\",\"numero\":5},{\"nom\":\"Doe\",\"prenom\":\"Jenny\",\"numero\":6}]},\"rounds\":[{\"scoreA\":1,\"scoreB\":2,\"roundNumber\":1},{\"scoreA\":3,\"scoreB\":4,\"roundNumber\":2},{\"scoreA\":5,\"scoreB\":6,\"roundNumber\":3}],\"status\":\"TERMINE\"}\n";
+    private final static String EXPECTED_REPORT = "{"
+            + "\"equipeA\":{\"nom\":\"Equipe 1\",\"joueurs\":["
+            + "{\"nom\":\"Doe\",\"prenom\":\"John\",\"numero\":1},"
+            + "{\"nom\":\"Doe\",\"prenom\":\"Jane\",\"numero\":2},"
+            + "{\"nom\":\"Doe\",\"prenom\":\"Jack\",\"numero\":3}"
+            + "]},"
+            + "\"equipeB\":{\"nom\":\"Equipe 2\",\"joueurs\":["
+            + "{\"nom\":\"Doe\",\"prenom\":\"Jill\",\"numero\":4},"
+            + "{\"nom\":\"Doe\",\"prenom\":\"Jim\",\"numero\":5},"
+            + "{\"nom\":\"Doe\",\"prenom\":\"Jenny\",\"numero\":6}"
+            + "]},"
+            + "\"rounds\":["
+            + "{\"id\":1,\"scoreA\":1,\"scoreB\":2,\"roundNumber\":1},"
+            + "{\"id\":2,\"scoreA\":3,\"scoreB\":4,\"roundNumber\":2},"
+            + "{\"id\":3,\"scoreA\":5,\"scoreB\":6,\"roundNumber\":3}"
+            + "],"
+            + "\"status\":\"TERMINE\","
+            + "\"date\":\"2026-01-01T12:00:00.000+0000\""
+            + "}\n";
 
     private final static Logger logger = org.slf4j.LoggerFactory.getLogger(JsonReportingServiceTest.class);
 

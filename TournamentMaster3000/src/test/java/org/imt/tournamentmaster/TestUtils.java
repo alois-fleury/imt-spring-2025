@@ -5,9 +5,9 @@ import org.imt.tournamentmaster.model.equipe.Joueur;
 import org.imt.tournamentmaster.model.match.Match;
 import org.imt.tournamentmaster.model.match.Round;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.*;
 
 public abstract class TestUtils {
 
@@ -35,7 +35,10 @@ public abstract class TestUtils {
         rounds.add(round2);
         rounds.add(round3);
 
+        LocalDateTime ldt = LocalDateTime.of(2026, 1, 1, 12, 0, 0);
+        Date fixedDate = Date.from(ldt.toInstant(ZoneOffset.UTC));
+
         // create a match
-        return new Match(1L, equipe1, equipe2, rounds, Match.Status.TERMINE, new Date());
+        return new Match(1L, equipe1, equipe2, rounds, Match.Status.TERMINE, fixedDate);
     }
 }
