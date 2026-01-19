@@ -53,7 +53,11 @@ public class MatchService {
     }
 
     @Transactional
-    public void delete(long id) {
-        matchRepository.deleteById(id);
+    public boolean delete(long id) {
+        if (matchRepository.existsById(id)) {
+            matchRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }
