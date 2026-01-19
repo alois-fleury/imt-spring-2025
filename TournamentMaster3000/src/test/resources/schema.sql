@@ -1,7 +1,7 @@
 -- joueur
 CREATE TABLE joueur
 (
-    id     BIGINT AUTO_INCREMENT       NOT NULL,
+    id     BIGINT       NOT NULL,
     nom    VARCHAR(255) NULL,
     prenom VARCHAR(255) NULL,
     numero INT          NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE joueur
 -- equipe
 CREATE TABLE equipe
 (
-    id  BIGINT AUTO_INCREMENT       NOT NULL,
+    id  BIGINT       NOT NULL,
     nom VARCHAR(255) NULL,
     CONSTRAINT pk_equipe PRIMARY KEY (id)
 );
