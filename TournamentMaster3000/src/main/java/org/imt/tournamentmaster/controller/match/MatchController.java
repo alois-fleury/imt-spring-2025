@@ -34,4 +34,28 @@ public class MatchController {
     public List<Match> getAll() {
         return matchService.getAll();
     }
+
+    @PostMapping
+    public ResponseEntity<Match> create(@RequestBody Match match) {
+        return ResponseEntity.ok(matchService.create(match));
+    }
+
+    @PutMapping("/{id}/status")
+    public ResponseEntity<Match> updateStatus(@PathVariable long id, @RequestParam Match.Status status) {
+        try {
+            return matchService.updateStatus(id, status)
+                    .map(ResponseEntity::ok)
+                    .orElseGet(() -> ResponseEntity.notFound().build());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable long id) {
+        if (matchService.delete(id)) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
 }

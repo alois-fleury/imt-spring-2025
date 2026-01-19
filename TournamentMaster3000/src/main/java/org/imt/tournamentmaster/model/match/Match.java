@@ -1,9 +1,11 @@
 package org.imt.tournamentmaster.model.match;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.imt.tournamentmaster.model.equipe.Equipe;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,8 +15,9 @@ import java.util.Objects;
 public class Match {
 
     @JsonIgnore
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private long id;
+    private Long id;
 
     @ManyToOne
     private Equipe equipeA;
@@ -22,7 +25,7 @@ public class Match {
     @ManyToOne
     private Equipe equipeB;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "match_round",
             joinColumns = @JoinColumn(name = "match_id"),
@@ -32,18 +35,22 @@ public class Match {
 
     private Status status;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date date;
+
     public Match() {
     }
 
-    public Match(long id, Equipe equipeA, Equipe equipeB, List<Round> rounds, Status status) {
+    public Match(Long id, Equipe equipeA, Equipe equipeB, List<Round> rounds, Status status, Date date) {
         this.id = id;
         this.equipeA = equipeA;
         this.equipeB = equipeB;
         this.rounds = rounds;
         this.status = status;
+        this.date = date;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -63,7 +70,7 @@ public class Match {
         return status;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -81,6 +88,14 @@ public class Match {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public Equipe determineWinner() {
@@ -110,6 +125,7 @@ public class Match {
                 ", equipeB=" + equipeB +
                 ", rounds=" + rounds +
                 ", status=" + status +
+                ", date=" + date +
                 '}';
     }
 
@@ -118,12 +134,12 @@ public class Match {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Match match = (Match) o;
-        return id == match.id && Objects.equals(equipeA, match.equipeA) && Objects.equals(equipeB, match.equipeB) && Objects.equals(rounds, match.rounds) && status == match.status;
+        return id == match.id && Objects.equals(equipeA, match.equipeA) && Objects.equals(equipeB, match.equipeB) && Objects.equals(rounds, match.rounds) && status == match.status && Objects.equals(date, match.date);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, equipeA, equipeB, rounds, status);
+        return Objects.hash(id, equipeA, equipeB, rounds, status, date);
     }
 
     public enum Status {

@@ -50,7 +50,7 @@ ALTER TABLE equipe_joueur
 -- round
 CREATE TABLE round
 (
-    id           BIGINT NOT NULL,
+    id           BIGINT AUTO_INCREMENT NOT NULL,
     scorea       INT    NOT NULL,
     scoreb       INT    NOT NULL,
     round_number INT    NOT NULL,
@@ -60,10 +60,11 @@ CREATE TABLE round
 -- match
 CREATE TABLE `match`
 (
-    id         BIGINT NOT NULL,
-    equipea_id BIGINT NULL,
-    equipeb_id BIGINT NULL,
+    id         BIGINT AUTO_INCREMENT   NOT NULL,
+    equipea_id BIGINT   NULL,
+    equipeb_id BIGINT   NULL,
     status     SMALLINT NULL,
+    `date`     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT pk_match PRIMARY KEY (id)
 );
 
